@@ -61,3 +61,29 @@ class Program
             CheckMono(ref text, i);
         }
     }
+
+        static void CheckItalic(ref string text, int i)
+    {
+        if (text[i] == '_')
+        {
+            if (i == 0 || (i > 0 && !char.IsLetterOrDigit(text[i - 1])))
+            {
+                if (i < text.Length - 1)
+                {
+                    if (char.IsLetterOrDigit(text[i + 1]))
+                    {
+                        text = text.Remove(i, 1);
+                        text = text.Insert(i, "<i>");
+                        CloseItalic(ref text, i);
+                    }
+                    else if (char.IsPunctuation(text[i + 1]) || text[i + 1] == '`')
+                    {
+                        text = text.Remove(i, 1);
+                        text = text.Insert(i, "<i>");
+                        CloseItalic(ref text, i);
+                    }
+                }
+            }
+        }
+    }
+    
