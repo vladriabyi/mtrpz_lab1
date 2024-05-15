@@ -294,3 +294,79 @@ class Program
             }
         }
     }
+
+        static void CheckIncluded(string text)
+    {
+        for (int i = 0; i < text.Length; i++)
+        {
+            if (i < text.Length - 2 && text.Substring(i, 3) == "<i>")
+            {
+                CheckIncluded_I(text, i);
+            }
+            else if (i < text.Length - 2 && text.Substring(i, 3) == "<b>")
+            {
+                CheckIncluded_B(text, i);
+            }
+            else if (i < text.Length - 3 && text.Substring(i, 4) == "<tt>")
+            {
+                CheckIncluded_TT(text, i);
+            }
+        }
+    }
+
+    static void CheckIncluded_I(string text, int i)
+    {
+        for (int j = i + 2; j < text.Length; j++)
+        {
+            if (j < text.Length - 3 && text.Substring(j, 4) == "</i>")
+            {
+                break;
+            }
+            else if (j < text.Length - 2 && text.Substring(j, 3) == "<b>")
+            {
+                throw new Exception("Застосовано пунктуацію");
+            }
+            else if (j < text.Length - 3 && text.Substring(j, 4) == "<tt>")
+            {
+                throw new Exception("Застосовано пунктуацію");
+            }
+        }
+    }
+
+    static void CheckIncluded_B(string text, int i)
+    {
+        for (int j = i + 2; j < text.Length; j++)
+        {
+            if (j < text.Length - 3 && text.Substring(j, 4) == "</b>")
+            {
+                break;
+            }
+            else if (j < text.Length - 2 && text.Substring(j, 3) == "<i>")
+            {
+                throw new Exception("Застосовано пунктуацію");
+            }
+            else if (j < text.Length - 3 && text.Substring(j, 4) == "<tt>")
+            {
+                throw new Exception("Застосовано пунктуацію");
+            }
+        }
+    }
+
+    static void CheckIncluded_TT(string text, int i)
+    {
+        for (int j = i + 2; j < text.Length; j++)
+        {
+            if (j < text.Length - 4 && text.Substring(j, 5) == "</tt>")
+            {
+                break;
+            }
+            else if (j < text.Length - 2 && text.Substring(j, 3) == "<b>")
+            {
+                throw new Exception("Застосовано пунктуацію");
+            }
+            else if (j < text.Length - 4 && text.Substring(j, 3) == "<i>")
+            {
+                throw new Exception("Застосовано пунктуацію");
+            }
+        }
+    }
