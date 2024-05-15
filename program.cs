@@ -87,3 +87,34 @@ class Program
         }
     }
     
+        static void CloseItalic(ref string text, int i)
+    {
+        for (int j = i + 1; j < text.Length; j++)
+        {
+            if (text[j] == '_')
+            {
+                if (j == text.Length-1 || (j < text.Length-1 && !char.IsLetterOrDigit(text[j+1])))
+                {
+                    if (j > 0)
+                    {
+                        if (char.IsLetterOrDigit(text[j - 1]))
+                        {
+                            text = text.Remove(j, 1);
+                            text = text.Insert(j, "</i>");
+                            break;
+                        }
+                        else if (char.IsPunctuation(text[j - 1]) || text[j - 1] == '`' || text[j - 1] == '>')
+                        {
+                            text = text.Remove(j, 1);
+                            text = text.Insert(j, "</i>");
+                            break;
+                        }
+                    }
+                }
+            }
+            else if (j == text.Length - 1)
+            {
+                throw new Exception("Незакриті розділові знаки");
+            }
+        }
+    }
